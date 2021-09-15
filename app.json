@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "simplex",
+    "slug": "simplex",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "simplex"
+}
