@@ -10,7 +10,7 @@ export const Container = styled.View`
 
 
 export const InputWrapper = styled.View`
-  width: 80px;
+  width: ${RFValue(80)}px;
 `;
 
 export const Icon = styled(Feather)`
@@ -24,4 +24,5 @@ export const Title = styled.Text`
   font-family: ${({theme}) => theme.fonts.bold};
   font-size: ${RFValue(18)}px;
   margin: 0 8px;
+  align-self: center;
 `;

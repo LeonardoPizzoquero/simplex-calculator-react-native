@@ -20,8 +20,9 @@ import {
   FunctionGoal,
   RestrictionValueContainer,
 } from './styles';
+import {simplexAlgorithm} from '../../utils/simplexAlgorithm';
 
-type DefaultVariable = {
+export type DefaultVariable = {
   id: number;
   title: string;
   value: string;
@@ -140,8 +141,7 @@ export function FunctionDefinition({
   }, []);
 
   function handleSubmit() {
-    console.log(objectiveFunction);
-    console.log(restrictions);
+    simplexAlgorithm(objectiveFunction, restrictions);
   }
 
   return (
@@ -174,7 +174,6 @@ export function FunctionDefinition({
         </FunctionGoal>
 
         <Label>Função objetiva (FO):</Label>
-
         <FunctionContainer>
           {objectiveFunction.map((variable, index, arr) => (
             <Variable
