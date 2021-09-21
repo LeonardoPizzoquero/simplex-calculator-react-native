@@ -1,5 +1,5 @@
 import React, {useState, Fragment, useCallback, useEffect} from 'react';
-import {View} from 'react-native';
+import {KeyboardAvoidingView, Platform, View} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {Picker} from '@react-native-picker/picker';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -16,9 +16,10 @@ import {StackParamList} from '../routes/app.routes';
 import {
   Form,
   FunctionContainer,
-  RestrictionsList,
+  FieldsContainer,
   FunctionGoal,
   RestrictionValueContainer,
+  ObjectiveFunctionContainer,
 } from './styles';
 import {simplexAlgorithm} from '../../utils/simplexAlgorithm';
 
@@ -141,136 +142,146 @@ export function FunctionDefinition({
   }, []);
 
   function handleSubmit() {
+    console.log('Aqui');
     simplexAlgorithm(objectiveFunction, restrictions);
   }
 
   return (
-    <Container>
-      <Form>
-        <Label>Qual o objetivo da função?</Label>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{
+        flex: 1,
+      }}
+    >
+      <Container>
+        <Form>
+          <Label>Qual o objetivo da função?</Label>
 
-        <FunctionGoal>
-          <Select
-            selectedValue={selectedLanguage}
-            onValueChange={(itemValue) =>
-              setSelectedLanguage(String(itemValue))
-            }
-          >
-            <Picker.Item
-              style={{
-                fontSize: RFValue(18),
-              }}
-              label="Maximizar"
-              value="max"
-            />
-            <Picker.Item
-              style={{
-                fontSize: RFValue(18),
-              }}
-              label="Minimizar"
-              value="min"
-            />
-          </Select>
-        </FunctionGoal>
-
-        <Label>Função objetiva (FO):</Label>
-        <FunctionContainer>
-          {objectiveFunction.map((variable, index, arr) => (
-            <Variable
-              key={variable.id}
-              isLastVariable={arr.length - 1 === index}
-              title={variable.title}
-              value={variable.value}
-              onChangeText={(text) =>
-                handleChangeFunctionVariable(text, variable.id)
+          <FunctionGoal>
+            <Select
+              selectedValue={selectedLanguage}
+              onValueChange={(itemValue) =>
+                setSelectedLanguage(String(itemValue))
               }
-            />
-          ))}
-        </FunctionContainer>
+            >
+              <Picker.Item
+                style={{
+                  fontSize: RFValue(18),
+                }}
+                label="Maximizar"
+                value="max"
+              />
+              <Picker.Item
+                style={{
+                  fontSize: RFValue(18),
+                }}
+                label="Minimizar"
+                value="min"
+              />
+            </Select>
+          </FunctionGoal>
 
-        <Label>Restrições:</Label>
-        <RestrictionsList>
-          {restrictions.map((line, idx) => (
-            <FunctionContainer key={line.id}>
-              {line.restrictions.map((restriction, index) => (
-                <Fragment key={restriction.id}>
+          <FieldsContainer>
+            <ObjectiveFunctionContainer>
+              <Label>Função objetiva (FO):</Label>
+              <FunctionContainer>
+                {objectiveFunction.map((variable, index, arr) => (
                   <Variable
-                    title={restriction.title}
-                    isLastVariable={
-                      restrictions[idx].restrictions.length - 1 === index
-                    }
-                    value={restriction.value}
+                    key={variable.id}
+                    isLastVariable={arr.length - 1 === index}
+                    title={variable.title}
+                    value={variable.value}
                     onChangeText={(text) =>
-                      handleChangeRestrictionValue(
-                          text,
-                          line.id,
-                          restriction.id,
-                      )
+                      handleChangeFunctionVariable(text, variable.id)
                     }
                   />
+                ))}
+              </FunctionContainer>
+            </ObjectiveFunctionContainer>
 
-                  {restrictions[idx].restrictions.length - 1 === index && (
-                    <RestrictionValueContainer>
-                      <View style={{
-                        width: 130,
-                        marginRight: 18,
-                      }}>
-                        <Select
-                          selectedValue={line.functionType}
-                          onValueChange={(itemValue) =>
-                            handleChangeRestrictionType(
-                                String(itemValue),
-                                line.id,
-                            )
-                          }
-                        >
-                          <Picker.Item
-                            style={{
-                              fontSize: RFValue(18),
-                            }}
-                            label="="
-                            value="="
-                          />
-                          <Picker.Item
-                            style={{
-                              fontSize: RFValue(18),
-                            }}
-                            label=">="
-                            value=">="
-                          />
-                          <Picker.Item
-                            style={{
-                              fontSize: RFValue(18),
-                            }}
-                            label="<="
-                            value="<="
-                          />
-                        </Select>
-                      </View>
+            <Label>Restrições:</Label>
 
-                      <View style={{
-                        width: 80,
-                        marginRight: 18,
-                      }}>
-                        <Input
-                          keyboardType="numeric"
-                          placeholder="0"
-                          value={line.restrictionValue}
-                          onChangeText={(text) =>
-                            handleChangeRestrictionTotal(text, line.id)
-                          }
-                        />
-                      </View>
-                    </RestrictionValueContainer>
-                  )}
-                </Fragment>
-              ))}
-            </FunctionContainer>
-          ))}
-        </RestrictionsList>
+            {restrictions.map((line, idx) => (
+              <FunctionContainer key={line.id}>
+                {line.restrictions.map((restriction, index) => (
+                  <Fragment key={restriction.id}>
+                    <Variable
+                      title={restriction.title}
+                      isLastVariable={
+                        restrictions[idx].restrictions.length - 1 === index
+                      }
+                      value={restriction.value}
+                      onChangeText={(text) =>
+                        handleChangeRestrictionValue(
+                            text,
+                            line.id,
+                            restriction.id,
+                        )
+                      }
+                    />
 
-        <Button title="CONTINUAR" onPress={handleSubmit} />
-      </Form>
-    </Container>
+                    {restrictions[idx].restrictions.length - 1 === index && (
+                      <RestrictionValueContainer>
+                        <View style={{
+                          width: 130,
+                          marginRight: 18,
+                        }}>
+                          <Select
+                            selectedValue={line.functionType}
+                            onValueChange={(itemValue) =>
+                              handleChangeRestrictionType(
+                                  String(itemValue),
+                                  line.id,
+                              )
+                            }
+                          >
+                            <Picker.Item
+                              style={{
+                                fontSize: RFValue(18),
+                              }}
+                              label="="
+                              value="="
+                            />
+                            <Picker.Item
+                              style={{
+                                fontSize: RFValue(18),
+                              }}
+                              label=">="
+                              value=">="
+                            />
+                            <Picker.Item
+                              style={{
+                                fontSize: RFValue(18),
+                              }}
+                              label="<="
+                              value="<="
+                            />
+                          </Select>
+                        </View>
+
+                        <View style={{
+                          width: 80,
+                          marginRight: 18,
+                        }}>
+                          <Input
+                            keyboardType="numeric"
+                            placeholder="0"
+                            value={line.restrictionValue}
+                            onChangeText={(text) =>
+                              handleChangeRestrictionTotal(text, line.id)
+                            }
+                          />
+                        </View>
+                      </RestrictionValueContainer>
+                    )}
+                  </Fragment>
+                ))}
+              </FunctionContainer>
+            ))}
+          </FieldsContainer>
+          <Button title="CONTINUAR" onPress={handleSubmit} />
+        </Form>
+      </Container>
+    </KeyboardAvoidingView>
   );
 }

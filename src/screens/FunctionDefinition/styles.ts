@@ -21,7 +21,7 @@ export const FunctionContainer = styled.ScrollView.attrs({
   margin-top: 14px;
 `;
 
-export const RestrictionsList = styled.ScrollView.attrs({
+export const FieldsContainer = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
 })`
   width: 100%;
@@ -41,4 +41,8 @@ export const RestrictionValueContainer = styled.View`
   flex-direction: row;
   align-items: center;
   width: 220px;
+`;
+
+export const ObjectiveFunctionContainer = styled.View`
+  height: 150px;
 `;
