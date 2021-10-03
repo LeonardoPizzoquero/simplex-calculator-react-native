@@ -42,6 +42,7 @@ type FunctionDefinitionProps = NativeStackScreenProps<
 
 export function FunctionDefinition({
   route,
+  navigation,
 }: FunctionDefinitionProps) {
   const [objectiveFunction, setObjectiveFunction] =
     useState<DefaultVariable[]>([]);
@@ -127,7 +128,7 @@ export function FunctionDefinition({
     return variablesArray.map((number) => ({
       id: number,
       restrictionValue: '',
-      functionType: '>=',
+      functionType: '<=',
       restrictions: objectiveFunctionVariables.map((variable) => ({
         id: variable,
         title: `X${variable}`,
@@ -142,8 +143,13 @@ export function FunctionDefinition({
   }, []);
 
   function handleSubmit() {
-    console.log('Aqui');
-    simplexAlgorithm(objectiveFunction, restrictions);
+    const iterations = simplexAlgorithm(objectiveFunction, restrictions);
+
+    navigation.navigate('Iterations', {
+      iterations: iterations || [],
+      restrictionsNumber: Number(restrictionsNumber),
+      variablesNumber: Number(variablesNumber),
+    });
   }
 
   return (

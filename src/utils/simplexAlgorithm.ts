@@ -5,8 +5,9 @@ export function simplexAlgorithm(
     restrictions: TVariable[],
 ) {
   try {
+    const allIterations = [];
     const objectiveFunctionMax = objectiveFunction.map((variable) =>
-      !variable.value ? -1 : Number(variable.value) * -1);
+      !variable.value ? 0 : Number(variable.value) * -1);
 
     const initialMatrix = [];
 
@@ -21,11 +22,11 @@ export function simplexAlgorithm(
       let newLine = [0];
 
       restriction.restrictions.map((variable) =>
-      !variable.value ? newLine.push(1) : newLine.push(Number(variable.value)),
+      !variable.value ? newLine.push(0) : newLine.push(Number(variable.value)),
       );
 
       const slackVariables = Array.from({
-        length: objectiveFunctionMax.length},
+        length: restrictions.length},
       (_, index) => index + 1,
       ).map((number) => number === restriction.id ? 1 : 0);
 
@@ -40,7 +41,16 @@ export function simplexAlgorithm(
 
     let solutionIsNotGood = true;
 
-    const algorithmMatrix = [...initialMatrix];
+    // const algorithmMatrix = [...initialMatrix];
+    const algorithmMatrix = [
+      [1, -4, -6, -2, -1, 0, 0, 0, 0, 0],
+      [0, 1, 1, 1, 2, 1, 0, 0, 0, 480],
+      [0, 2, 4, 2, -1, 0, 1, 0, 0, 720],
+      [0, 3, 2, -1, 2, 0, 0, 1, 0, 830],
+      [0, 1, 2, 2, 1, 0, 0, 0, 1, 606],
+    ];
+
+    allIterations.push([...algorithmMatrix]);
 
     while (solutionIsNotGood) {
       const columnInput = {
@@ -65,8 +75,9 @@ export function simplexAlgorithm(
         break;
       }
 
+
       // Escolhe a coluna input
-      for (let j = 1; j <= (algorithmMatrix[0].length - 2) / 2; j++) {
+      for (let j = 1; j <= algorithmMatrix[0].length - 2; j++) {
         if (algorithmMatrix[0][j] < columnInput.value) {
           columnInput.value = algorithmMatrix[0][j];
           columnInput.index = j;
@@ -140,7 +151,11 @@ export function simplexAlgorithm(
         linesValues[currentLine] = true;
         algorithmMatrix[currentLine] = newLine;
       }
+
+      allIterations.push([...algorithmMatrix]);
     }
+
+    return allIterations;
   } catch (err) {
     console.log(err);
   }

@@ -4,6 +4,7 @@ import {useTheme} from 'styled-components';
 
 import {Calculator} from '../../screens/Calculator';
 import {FunctionDefinition} from '../../screens/FunctionDefinition';
+import {Iterations} from '../../screens/Iterations';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,6 +14,11 @@ export type StackParamList = {
     restrictionsNumber: string;
   };
   Calculator: undefined;
+  Iterations: {
+    iterations: number[][][];
+    restrictionsNumber: number;
+    variablesNumber: number;
+  }
 };
 
 export function AppRoutes() {
@@ -32,6 +38,20 @@ export function AppRoutes() {
         component={FunctionDefinition}
         options={{
           title: 'Definições do problema',
+          headerTitleStyle: {
+            fontFamily: theme.fonts.bold,
+          },
+          headerTintColor: theme.colors.white,
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Iterations"
+        component={Iterations}
+        options={{
+          title: 'Soluções',
           headerTitleStyle: {
             fontFamily: theme.fonts.bold,
           },

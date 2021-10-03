@@ -16,3 +16,8 @@ export const Form = styled.View`
   padding: 0 20px;
   width: 100%; 
 `;
+
+export const ErrorMessage = styled.Text`
+  font-family: ${({theme}) => theme.fonts.bold};
+  color: ${({theme}) => theme.colors.error};
+`;

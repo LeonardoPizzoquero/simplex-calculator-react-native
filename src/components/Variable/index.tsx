@@ -13,7 +13,7 @@ export function Variable({isLastVariable, title, ...rest}: VariableProps) {
   return (
     <Container>
       <InputWrapper>
-        <Input keyboardType="numeric" placeholder="1" {...rest} />
+        <Input keyboardType="numeric" placeholder="0" {...rest} />
       </InputWrapper>
 
       <Title>{title}</Title>
