@@ -30,13 +30,6 @@ export const FieldsContainer = styled.ScrollView.attrs({
   margin-bottom: 40px;
 `;
 
-export const FunctionGoal = styled.View`
-  width: 100%;
-  margin-top: 8px;
-  height: 70px;
-  margin-bottom: 16px;
-`;
-
 export const RestrictionValueContainer = styled.View`
   flex-direction: row;
   align-items: center;

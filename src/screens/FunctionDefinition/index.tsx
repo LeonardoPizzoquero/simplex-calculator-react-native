@@ -17,7 +17,6 @@ import {
   Form,
   FunctionContainer,
   FieldsContainer,
-  FunctionGoal,
   RestrictionValueContainer,
   ObjectiveFunctionContainer,
 } from './styles';
@@ -47,7 +46,6 @@ export function FunctionDefinition({
   const [objectiveFunction, setObjectiveFunction] =
     useState<DefaultVariable[]>([]);
   const [restrictions, setRestrictions] = useState<TVariable[]>([]);
-  const [selectedLanguage, setSelectedLanguage] = useState('');
 
   const {restrictionsNumber, variablesNumber} = route.params;
 
@@ -161,32 +159,6 @@ export function FunctionDefinition({
     >
       <Container>
         <Form>
-          <Label>Qual o objetivo da função?</Label>
-
-          <FunctionGoal>
-            <Select
-              selectedValue={selectedLanguage}
-              onValueChange={(itemValue) =>
-                setSelectedLanguage(String(itemValue))
-              }
-            >
-              <Picker.Item
-                style={{
-                  fontSize: RFValue(18),
-                }}
-                label="Maximizar"
-                value="max"
-              />
-              <Picker.Item
-                style={{
-                  fontSize: RFValue(18),
-                }}
-                label="Minimizar"
-                value="min"
-              />
-            </Select>
-          </FunctionGoal>
-
           <FieldsContainer>
             <ObjectiveFunctionContainer>
               <Label>Função objetiva (FO):</Label>
@@ -234,6 +206,9 @@ export function FunctionDefinition({
                         }}>
                           <Select
                             selectedValue={line.functionType}
+                            enabled={false}
+                            collapsable={false}
+
                             onValueChange={(itemValue) =>
                               handleChangeRestrictionType(
                                   String(itemValue),
