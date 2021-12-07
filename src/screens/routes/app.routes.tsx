@@ -31,12 +31,14 @@ export function AppRoutes() {
         component={Calculator}
         options={{
           headerShown: false,
+          statusBarHidden: true,
         }}
       />
       <Stack.Screen
         name="FunctionDefinition"
         component={FunctionDefinition}
         options={{
+          statusBarHidden: false,
           title: 'Definições do problema',
           headerTitleStyle: {
             fontFamily: theme.fonts.bold,
@@ -52,6 +54,7 @@ export function AppRoutes() {
         component={Iterations}
         options={{
           title: 'Soluções',
+          statusBarHidden: false,
           headerTitleStyle: {
             fontFamily: theme.fonts.bold,
           },

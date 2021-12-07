@@ -1,11 +1,30 @@
 {
   "expo": {
-    "name": "simplex",
-    "slug": "simplex",
+    "name": "CSimplex",
+    "slug": "CSimplex",
     "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/icon.png",
+    "splash": {
+      "image": "./src/assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#333333"
+    },
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.eep.csimplex",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.eep.csimplex",
+      "versionCode": 1
+    }
   },
-  "name": "simplex"
+  "name": "CSimplex"
 }
